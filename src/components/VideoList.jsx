@@ -31,7 +31,7 @@ var VideoList = (props) => (
   // for each video, invoke VideoListEntry, passing video as an argument
   <div className="video-list">
     {props.videos.map(video =>
-      <VideoListEntry video={video}/>
+      <VideoListEntry video={video} handleClick={props.handleClick}/>
     )}
   </div>
 );

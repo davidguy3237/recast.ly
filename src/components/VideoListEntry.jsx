@@ -15,6 +15,7 @@ const VideoListEntry = (props) => {
   let thumbnail = props.video.snippet.thumbnails.default.url;
   let title = props.video.snippet.title;
   let description = props.video.snippet.description;
+  let handleClick = props.handleClick;
   return (
     <div className="video-list-entry media">
 
@@ -23,7 +24,7 @@ const VideoListEntry = (props) => {
       </div>
 
       <div className="media-body">
-        <div className="video-list-entry-title">{title}</div>
+        <div className="video-list-entry-title" onClick={(event) => handleClick(props.video)}>{title}</div>
         <div className="video-list-entry-detail">{description}</div>
       </div>
 
@@ -42,6 +43,7 @@ VideoListEntry.propTypes = {
 export default VideoListEntry;
 
 /*
+EXAMPLE VIDEO OBJECT
 {
   kind: 'youtube#searchResult',
   etag: 'abQHWywil_AkNqdqji7_FqiK-u4/Ykxo_CqKu8F8kcm-iNgL332gQTY',
