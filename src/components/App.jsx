@@ -1,22 +1,32 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
-const {useState} = React; // THIS IS COPIED FROM THE REACT COMPONENTS SOLO EXERCISE
-// import {useState} from 'react'; // FOR SOME REASON THIS WAY DOESN'T WORK
+import searchYouTube from '../lib/searchYouTube.js';
+import Search from './Search.js';
+const {useState, useEffect} = React;
 
 var App = () => {
-  const [videos, setVideos] = useState(exampleVideoData);
-  const [currentlyPlaying, setCurrentlyPlaying] = useState(videos[0]);
+  const [videos, setVideos] = useState([]);
+  const [currentlyPlaying, setCurrentlyPlaying] = useState({});
+  const [searchText, setSearchText] = useState('');
+  let timeout = null;
 
-  const changeCurrentlyPlaying = (newVideo) => {
-    setCurrentlyPlaying(newVideo);
-  };
+  useEffect(() => {
+    timeout = setTimeout(() => {
+      searchYouTube(searchText, (videos) => {
+        setVideos(videos);
+        setCurrentlyPlaying(videos[0]);
+      });
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [searchText]);
 
   return (
     <div>
       <nav className="navbar">
         <div className="col-md-6 offset-md-3">
-          <div><h5><em>search</em> view goes here</h5></div>
+          <Search searchYouTube={searchYouTube} setSearchText={setSearchText} />
         </div>
       </nav>
       <div className="row">
@@ -24,7 +34,7 @@ var App = () => {
           <VideoPlayer video={currentlyPlaying} />
         </div>
         <div className="col-md-5">
-          <VideoList videos={videos} handleClick={changeCurrentlyPlaying} />
+          <VideoList videos={videos} handleClick={setCurrentlyPlaying} />
         </div>
       </div>
     </div>
@@ -34,4 +44,3 @@ var App = () => {
 // `var` declarations will only exist globally where explicitly defined
 export default App;
 
-ReactDOM.render(<App />, document.getElementById('app'));
