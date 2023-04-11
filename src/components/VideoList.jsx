@@ -1,12 +1,41 @@
-var VideoList = () => (
+/*
+
+exampleVideoData =
+[
+{object 1}
+{object 2}
+{object 3}
+{object 4}
+{object 5}
+]
+*/
+
+// var VideoList = (exampleVideoData) => (
+//   <div className="video-list">
+//     <div><h5><em>videoListEntry</em> view goes here</h5></div>
+//     <div><h5><em>videoListEntry</em> view goes here</h5></div>
+//     <div><h5><em>videoListEntry</em> view goes here</h5></div>
+//     <div><h5><em>videoListEntry</em> view goes here</h5></div>
+//     <div><h5><em>videoListEntry</em> view goes here</h5></div>
+//   </div>
+
+//   // iterate over the array of object
+//     // call video list entry on each object
+//       //
+// );
+
+import VideoListEntry from './VideoListEntry.js';
+
+var VideoList = (props) => (
+  // iterate through the example video data using .map method
+  // for each video, invoke VideoListEntry, passing video as an argument
   <div className="video-list">
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
-    <div><h5><em>videoListEntry</em> view goes here</h5></div>
+    {props.videos.map(video =>
+      <VideoListEntry video={video}/>
+    )}
   </div>
 );
+
 
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated
